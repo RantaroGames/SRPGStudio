@@ -43,6 +43,10 @@ ran
 ■利用規約
 https://github.com/RantaroGames/SRPG_Studio/blob/be1b84ab349a0ac1a3573bf645e5c78cb3ab12c3/README.md
 
+
+■更新履歴
+2025/01/02 ユニットがnullの時は処理を終了するように修正
+
 */
 
 
@@ -50,6 +54,8 @@ function F_exchangeUnitInfo_Name(text)
 {
 	var content = root.getEventCommandObject().getOriginalContent();
 	var unit = content.getUnit();
+	
+	if (unit == null) return;
 	
 	if (typeof text === 'string') {
 		unit.setName(text);
@@ -61,6 +67,7 @@ function F_exchangeUnitInfo_Description(text)
 {
 	var content = root.getEventCommandObject().getOriginalContent();
 	var unit = content.getUnit();
+	if (unit == null) return;
 	
 	// エディタのツール>オプション>サイズ>データ説明の文字数と同じ値に設定すること
 	var textCount = 70;
@@ -80,7 +87,7 @@ function F_exchangeUnitInfo_faceImage(isRuntime, id, xSrc, ySrc)
 	var content = root.getEventCommandObject().getOriginalContent();
 	var unit = content.getUnit();
 	
-	if (handle.isNullHandle()) return;
+	if (unit == null || handle == null || handle.isNullHandle()) return;
 	
 	unit.setFaceResourceHandle(handle);
 }
