@@ -41,6 +41,7 @@ https://github.com/RantaroGames/SRPG_Studio/blob/be1b84ab349a0ac1a3573bf645e5c78
 
 ■更新履歴
 2024/08/17 新規作成
+2025/01/04 拠点でコマンドリスト更新時にNew!表示が残ってしまっていた問題を修正
 
 */
 
@@ -229,6 +230,7 @@ RestCommand.rebuildCommand = function() {
 	var count = this._commandScrollbar.getObjectCount();
 	
 	this._commandScrollbar._isNewMarkIndex_CM = -1;
+	this._commandScrollbar._isNewMarkIndex_TK = -1;
 	
 	for (index = 0; index < count; index++) {
 		object = this._commandScrollbar.getObjectFromIndex(index);
