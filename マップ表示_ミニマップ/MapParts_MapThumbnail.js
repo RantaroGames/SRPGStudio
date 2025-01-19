@@ -32,7 +32,7 @@ ran
 ■更新履歴
 2023/03/08 新規作成
 2023/03/20 表示切替方式を変更(cキーで大→小→非表示→大...)
-
+2025/01/20 マップカーソルが画面右半分にある時は、ミニマップ表示位置を左側に移動させるようにした
 
 */
 
@@ -41,14 +41,13 @@ ran
 //--------------------------------------
 // 設定項目
 //--------------------------------------
-//　ミニマップのサイズ
 var MiniMapSetting = {
 	// 幅(環境設定の値[大, 小, 非表示, なし]に対応する配列)
 	  MapWidth: [320, 240, 0, 0]
 	// 高さ(環境設定の値に対応する配列)
 	, MapHeight: [240, 180, 0, 0]
 	// アルファ値
-	, MapAlpha: 160
+	, MapAlpha: 140
 	
 	// ユニット位置を示すシンボルの色[自軍, 敵軍, 友軍]
 	, UnitColor: [0x12fcee, 0xef3242, 0x08f511]
@@ -178,11 +177,6 @@ MapParts.MapThumbnail = defineObject(BaseMapParts,
 			return;
 		}
 		
-		// オプションキー(Cキー)押下時はミニマップを描画しない 
-		// if (root.isInputState(InputType.BTN3)) {
-			// return;
-		// }
-		
 		// ユニットを選択した(向きが正面では無い)時は、ミニマップを描画しない
 		unit = this.getMapPartsTarget();
 		if (unit !== null && unit.getDirection() !== DirectionType.NULL) {
@@ -190,12 +184,27 @@ MapParts.MapThumbnail = defineObject(BaseMapParts,
 		}
 		
 		// ミニマップを描画する原点座標
-		x = root.getGameAreaWidth() - this.getWindowWidth() - 20;
+		x = this._getPositionX();
 		y = root.getGameAreaHeight() - this.getWindowHeight() - 20;
 		
 		this._drawMain(x, y);
 	},
 	
+	_getPositionX: function() {
+		var x = LayoutControl.getPixelX(this.getMapPartsX());
+		var dx = root.getGameAreaWidth() / 2;
+		var y = LayoutControl.getPixelY(this.getMapPartsY());
+		var dy = root.getGameAreaHeight() / 2;
+		var xBase = root.getGameAreaWidth() - this.getWindowWidth() - 20;
+		
+		if (x > dx && y > dy) {
+			return 20;
+		}
+		else {
+			return xBase;
+		}
+	},
+
 	_drawMain: function(x, y) {
 		this.drawWindowContent(x, y);
 	},
