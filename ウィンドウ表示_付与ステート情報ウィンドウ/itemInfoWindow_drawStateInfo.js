@@ -469,7 +469,7 @@ SkillInfoWindow._configureStateInfo = function(groupArray) {
 //-------------------------------------------------------
 
 // ItemInfoRenderer.drawKeywordのcolorをdefault値にしたメソッド
-ItemInfoRenderer.drawDefault　= function(x, y, text) {
+ItemInfoRenderer.drawDefault = function(x, y, text) {
 	var textui = this.getTextUI();
 	var color = ColorValue.DEFAULT;
 	var font = textui.getFont();
